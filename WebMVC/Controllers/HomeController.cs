@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppUsuarioDAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,21 +11,10 @@ namespace WebMVC.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var usuarioDAO = new UsuarioDAO();
+            var todosUsuarios = usuarioDAO.Select();
+            return View(todosUsuarios);
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+    
     }
 }
