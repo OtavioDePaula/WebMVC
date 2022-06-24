@@ -47,7 +47,7 @@ namespace ConsoleBanco1
                 if (opçao == "0" || opçao == "1" || opçao == "2" || opçao == "3")
                 {
 
-                    var ListaUsuarios = usuarioDAO.Select();
+                    var ListaUsuarios = usuarioDAO.SelectAllUsers();
 
                     foreach (var usu in ListaUsuarios)
                     {

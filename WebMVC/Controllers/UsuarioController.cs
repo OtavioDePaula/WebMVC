@@ -14,14 +14,20 @@ namespace WebMVC.Controllers
         public ActionResult Index()
         {
             var usuarioDAO = new UsuarioDAO();
-            var todosUsuarios = usuarioDAO.Select();
+            var todosUsuarios = usuarioDAO.SelectAllUsers();
             return View(todosUsuarios);
         }
 
         // GET: Usuario/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var usuarioDAO = new UsuarioDAO();
+            var usuarioEspecifico = usuarioDAO.SelectUserById(id);
+
+            if (usuarioEspecifico == null)
+                return HttpNotFound(); 
+
+            return View(usuarioEspecifico);
         }
 
         // GET: Usuario/Create
@@ -34,6 +40,8 @@ namespace WebMVC.Controllers
         [HttpPost]
         public ActionResult Create(Usuario usuario)
         {
+            if (usuario == null)
+                return HttpNotFound();
 
             try
             {
@@ -55,18 +63,32 @@ namespace WebMVC.Controllers
         // GET: Usuario/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var usuarioDAO = new UsuarioDAO();
+            var usuarioEspecifico = usuarioDAO.SelectUserById(id);
+
+            if (usuarioEspecifico == null)
+                return HttpNotFound();
+
+            return View(usuarioEspecifico);
         }
 
         // POST: Usuario/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Usuario usuario)
         {
+            if (usuario == null)
+                return HttpNotFound();
+
             try
             {
-                // TODO: Add update logic here
+                if (ModelState.IsValid)
+                {
+                    var usuarioDAO = new UsuarioDAO();
+                    usuarioDAO.Update(usuario);
+                    return RedirectToAction("Index");
+                }
 
-                return RedirectToAction("Index");
+                return View(usuario);
             }
             catch
             {
@@ -77,18 +99,33 @@ namespace WebMVC.Controllers
         // GET: Usuario/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var usuarioDAO = new UsuarioDAO();
+            var usuarioEspecifico = usuarioDAO.SelectUserById(id);
+
+            if (usuarioEspecifico == null)
+                return HttpNotFound();
+
+            return View(usuarioEspecifico);
         }
 
         // POST: Usuario/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, Usuario usuario)
         {
+            if (usuario == null)
+                return HttpNotFound();
+            
+
             try
             {
-                // TODO: Add delete logic here
+                if (ModelState.IsValid)
+                {
+                    var usuarioDAO = new UsuarioDAO();
+                    usuarioDAO.Delete(id);
+                    return RedirectToAction("Index");
+                }
 
-                return RedirectToAction("Index");
+                return View(usuario);
             }
             catch
             {

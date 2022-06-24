@@ -12,7 +12,7 @@ namespace WebMVC.Controllers
         public ActionResult Index()
         {
             var usuarioDAO = new UsuarioDAO();
-            var todosUsuarios = usuarioDAO.Select();
+            var todosUsuarios = usuarioDAO.SelectAllUsers();
             return View(todosUsuarios);
         }
     

@@ -40,7 +40,7 @@ namespace AppUsuarioDAO
         public void Delete(int id)
         {
             var strQuery = "";
-            strQuery += string.Format(" delete from  tbusuario where IdUsu = {0};",id);
+            strQuery += string.Format(" delete from  tbusuario where IdUsu = {0};", id);
 
             using (db = new Banco())
             {
@@ -48,7 +48,7 @@ namespace AppUsuarioDAO
             }
         }
 
-        public List<Usuario> Select()
+        public List<Usuario> SelectAllUsers()
         {
             using (db = new Banco())
             {
@@ -59,6 +59,16 @@ namespace AppUsuarioDAO
             }            
         }
 
+        public Usuario SelectUserById(int id)
+        {
+            using (db = new Banco())
+            {
+                string strQuery = string.Format("select * from tbUsuario WHERE IdUsu = {0};", id);
+                var leitor = db.RetornaComando(strQuery);
+
+                return GeraListUsuario(leitor).FirstOrDefault();
+            }
+        }
 
         public List<Usuario> GeraListUsuario(MySqlDataReader leitor)
         {
